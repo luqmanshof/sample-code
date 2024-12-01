@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ContainerImageTags>1.0.0;latest</ContainerImageTags>
+    <ContainerRepository>dotnet-app</ContainerRepository>
   </PropertyGroup>
 
 </Project>
