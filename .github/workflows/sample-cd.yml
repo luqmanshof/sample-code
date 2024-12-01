@@ -40,7 +40,7 @@ jobs:
         run: dotnet test ./myWebApp.csproj --no-build --verbosity normal
       - name: Build the Docker image
         working-directory: ./
-        run: docker build . --file Dockerfile --tag dotnet-app:$(date +%s)
+        run: docker build . --file Dockerfile --tag dotnet-app:LATEST
 
   publish:
     needs: [verify-aws-auth, build]
@@ -68,6 +68,6 @@ jobs:
       - name: Publish Docker Image to Amazon ECR
         working-directory: ./
         run: |
-          dotnet publish -c Release -p:ContainerRepository=${{ secrets.REPOSITORY }} -p:RuntimeIdentifier=linux-x64
+          dotnet publish -c Release -p:RuntimeIdentifier=linux-x64
           docker push ${{ secrets.REPOSITORY }} --all-tags
           
