@@ -38,6 +38,9 @@ jobs:
         run: dotnet build ./myWebApp.csproj --no-restore
       - name: Run Tests
         run: dotnet test ./myWebApp.csproj --no-build --verbosity normal
+      - name: Build the Docker image
+        working-directory: ./
+        run: docker build . --file Dockerfile --tag dotnet-app:$(date +%s)
 
   publish:
     needs: [verify-aws-auth, build]
