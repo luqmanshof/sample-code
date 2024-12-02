@@ -65,6 +65,6 @@ jobs:
       - name: Publish Docker Image to Amazon ECR
         working-directory: ./
         run: |
-          dotnet publish -c Release -p:ContainerRepository=${{ secrets.REPOSITORY }} -p:RuntimeIdentifier=linux-x64
+          docker build . --file Dockerfile --tag ${{ secrets.REPOSITORY }}:latest
           docker push ${{ secrets.REPOSITORY }} --all-tags
           
