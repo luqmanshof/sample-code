@@ -38,10 +38,7 @@ jobs:
         run: dotnet build ./myWebApp.csproj --no-restore
       - name: Run Tests
         run: dotnet test ./myWebApp.csproj --no-build --verbosity normal
-      - name: Build the Docker image
-        working-directory: ./
-        run: docker build . --file Dockerfile --tag dotnet-app:LATEST
-
+        
   publish:
     needs: [verify-aws-auth, build]
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -68,6 +65,6 @@ jobs:
       - name: Publish Docker Image to Amazon ECR
         working-directory: ./
         run: |
-          dotnet publish -c Release -p:RuntimeIdentifier=linux-x64
+          dotnet publish -c Release -p:ContainerRepository=latest -p:RuntimeIdentifier=linux-x64
           docker push ${{ secrets.REPOSITORY }} --all-tags
           
