@@ -68,3 +68,14 @@ jobs:
           docker build . --file Dockerfile --tag ${{ secrets.REPOSITORY }}:latest
           docker push ${{ secrets.REPOSITORY }} --all-tags
           
+      - name: Deploy to ECS
+        uses: imehedi/actions-awscli-v2@latest
+        with:
+          args: ecs update-service --cluster dotnet-cluster --service dotnetapp --force-new-deployment
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+          
+      
